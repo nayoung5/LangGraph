@@ -1,4 +1,4 @@
-# 🏃‍♂️ Multi-Agent Exercise Recommendation System (LangGraph)
+# Multi-Agent Exercise Recommendation System (LangGraph)
 
 ### 1. 프로젝트명
 LangGraph 기반 맞춤형 건강 진단 및 운동 추천 에이전트 시스템
