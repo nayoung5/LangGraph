@@ -12,42 +12,37 @@ LangGraph 기반 맞춤형 건강 진단 및 운동 추천 에이전트 시스�
 - **State Management:** TypedDict, AgentState
 - **Environment:** Python, Jupyter Notebook
 
-### 4. 에이전트 워크플로우 (Workflow)
+### 4. 멀티에이전트 시스템(Multi-Agent System) 소개
+본 프로젝트는 단일 프롬프트 방식의 한계를 넘어, **각기 다른 전문성을 가진 에이전트들이 협력하는 구조**로 설계되었습니다. 
+- **모듈화:** 증상 추출, 후보 선정, 답변 생성을 독립된 노드로 분리하여 관리 효율성을 높였습니다.
+- **제어 가능성:** LangGraph를 통해 에이전트 간의 흐름(State)을 명확히 정의하여 답변의 일관성을 확보했습니다.
+- **최적화:** 각 단계별로 특화된 프롬프트를 사용하여 LLM의 환각(Hallucination) 현상을 최소화했습니다.
+
+### 5. 에이전트 워크플로우 (Workflow)
 사용자의 고민(Query)을 입력받아 **추출 -> 후보 선정 -> 답변 생성**의 3단계 에이전트 과정을 거쳐 최적의 솔루션을 제공합니다.
 
 1. **Extractor Agent**: 질문에서 "체력 저하", "체중 증가" 등 핵심 증상을 키워드로 추출
 2. **Candidate Agent**: 추출된 증상을 해결하는 데 도움이 되는 5가지 운동 후보군 선정
 3. **Answer Agent**: 선정된 운동의 특징, 추천 이유, 추가 조언을 포함한 개조식 가이드 생성
 
-### 5. 데이터 구조 및 전처리
+### 6. 데이터 구조 및 전처리
 - **AgentState 정의**: 에이전트 간의 데이터 전달을 위해 `query`, `symptoms`, `exercise_candidates`, `result`를 상태 객체로 관리
 - **Prompt Engineering**: 
   - 각 단계별 에이전트에게 명확한 페르소나 부여
   - `Ollama(exaone3.5:2.4b)` 모델이 안정적인 한국어 출력을 생성하도록 프롬프트 최적화
 
-### 6. LangGraph 아키텍처
+### 7. LangGraph 아키텍처
 
 
 **[Graph Structure]**
-```text
-+-----------+  
-| __start__ |  
-+-----------+  
-      * +-----------+  
-| extractor |  
-+-----------+  
-      * +-----------+  
-| candidate |  
-+-----------+  
-      * +-----------+  
-|  answer   |  
-+-----------+  
-      * +-----------+  
-|  __end__  |  
-+-----------+
-```
 
-### 7. 실행 결과 및 인사이트
+<img width="141" height="496" alt="image" src="https://github.com/user-attachments/assets/d967b664-ea05-4063-81a9-866afed5059f" />
+
+
+### 8. 실행 결과 및 인사이트
+
+<img width="1247" height="77" alt="image" src="https://github.com/user-attachments/assets/744fed05-392a-484a-8989-d08158e4507e" />
+
 
 **사용자 입력:** > "체력이 안좋고 살이 계속 찌는데 어떤 운동을 할까?"
 
@@ -58,13 +53,13 @@ LangGraph 기반 맞춤형 건강 진단 및 운동 추천 에이전트 시스�
   2. **근력 강화**: 스쿼트와 플랭크를 통해 전신 근육 균형 및 코어 안정성 확보
   3. **지속성**: 현재 체력 수준에 맞춘 강도 설정 및 영양 관리와 운동 기록의 병행 강조
 
-### 8. 프로젝트 특징 (Key Features)
+### 9. 프로젝트 특징 (Key Features)
 - **Local LLM 활용**: `Ollama(exaone3.5:2.4b)`를 사용하여 데이터 보안성을 높이고, 비용 발생 없이 로컬 환경에서 추론 가능
 - **멀티 에이전트 오케스트레이션**: `LangGraph`의 `StateGraph`를 통해 증상 추출, 후보 선정, 답변 생성이라는 복잡한 단계를 노드 단위로 분리하여 관리
 - **유연한 상태 관리**: `TypedDict` 기반의 `AgentState`를 사용하여 에이전트 간 데이터 전달의 안정성 확보
 - **개조식 한국어 출력**: LLM의 답변 형식을 엄격하게 통제하여 사용자 가독성을 높인 결과물 생성
 
-### 9. Reference
+### 10. Reference
 1. **프레임워크 및 라이브러리**
    - [LangGraph](https://python.langchain.com/docs/langgraph/): 그래프 기반 에이전트 흐름 제어
    - [LangChain Community](https://python.langchain.com/docs/get_started/introduction): LLM 체인 및 프롬프트 템플릿 관리
